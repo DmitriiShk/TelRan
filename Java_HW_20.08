@@ -1,0 +1,36 @@
+package Homework.Lesson_2;
+
+public class Dog {
+
+    String name;
+    String breed;
+    static int totalDogs = 0;
+
+    public Dog(String name, String breed){
+        this.name = name;
+        this.breed = breed;
+        totalDogs++;
+    }
+
+    public void printDogInfo(){
+        System.out.println("The dog's name is: "+name+". The dog's breed is: "+breed);
+    }
+
+}
+
+//Реализация: 
+
+package Homework.Lesson_2;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Dog dog1 = new Dog("Lord", "Great Dane.");
+        Dog dog2 = new Dog("Bella", "Poodle.");
+
+        dog1.printDogInfo();
+        dog2.printDogInfo();
+        System.out.println("*************************************************************");
+        System.out.println("Totally there are now: "+Dog.totalDogs+" dogs.");
+    }
+}
