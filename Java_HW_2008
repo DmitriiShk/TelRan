@@ -1,0 +1,62 @@
+package Homework.Lesson_1.Game.Hero;
+
+public class Elf {
+
+    int id;
+    short s;
+    byte b;
+    long l;
+    float f;
+    double d;
+    String str;
+
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
+    }
+
+    public void setS(short s){
+        this.s = s;
+    }
+    public short getS(){
+        return s;
+    }
+
+    public void setB(byte b){
+        this.b = b;
+    }
+    public byte getB(){
+        return b;
+    }
+
+    public void setL(long l){
+        this.l=l;
+    }
+    public long getL(){
+        return l;
+    }
+
+    public void setF(float f){
+        this.f=f;
+    }
+    public float getF(){
+        return f;
+    }
+
+    public void setD(double d){
+        this.d=d;
+    }
+    public double getD(){
+        return d;
+    }
+
+    public void setStr(String str){
+        this.str=str;
+    }
+    public String getStr(){
+        return str;
+    }
+
+}
