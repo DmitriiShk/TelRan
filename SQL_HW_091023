@@ -1,0 +1,7 @@
+SELECT * FROM airport.clients WHERE age > 40;
+SELECT * FROM airport.clients WHERE name LIKE '%Egor%';
+SELECT * FROM airport.tickets WHERE (service_class = 'Economy' OR service_class = 'PremiumEconomy') AND price > 40000;
+SELECT departure, arrival FROM airport.trips WHERE status = 'Cancelled' OR status = 'Delayed';
+SELECT * FROM airport.clients ORDER BY name;
+SELECT * FROM airport.clients ORDER BY age DESC;
+SELECT * FROM airport.tickets WHERE service_class NOT IN ('Economy') ORDER BY price DESC;  
