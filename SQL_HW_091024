@@ -1,0 +1,32 @@
+DROP DATABASE IF EXISTS `shop`;
+CREATE DATABASE `shop`;
+USE `shop`;
+
+CREATE TABLE goods (
+  id varchar (32),
+  title varchar(64),
+  quantity int  
+);
+
+INSERT INTO goods 
+VALUES ('001', 'Foam Dinner Plate', 100),
+       ('002', 'Plastic fork', 100),
+       ('003', 'Plastic table spoon', 100),
+       ('004', 'Plastic tea spoon', 100),
+       ('005', 'Papar caps, white', 100),
+       ('005', 'Paper napkings, white', 200);
+
+SELECT * FROM goods;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE goods SET id = '006' WHERE quantity = 200;
+SELECT * FROM goods;
+UPDATE goods SET title = 'Paper caps, white' WHERE id = '005';
+ALTER TABLE goods
+ADD price integer;
+UPDATE goods SET price = 0; 
+ALTER TABLE goods MODIFY COLUMN price numeric(8,2);
+ALTER TABLE goods MODIFY COLUMN price integer;
+ALTER TABLE goods RENAME COLUMN price TO item_price;
+-- It is also possible to rename price column into item_price using the following command: ALTER TABLE goods CHANGE price item_price integer;
+ALTER TABLE goods DROP COLUMN item_price; 
+SET SQL_SAFE_UPDATES = 1;
