@@ -1,0 +1,134 @@
+I.
+//Методы shallowCopy() и deepCopy() в классе Student:
+
+
+
+II.
+// Написать метод generateMatrix(), который будет создавать матрицу размера m на n, у которой на побочной диагонали будут единицы, остальные значения 0.
+// Input: n = 4, m = 3
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int[][] array = new int[4][3];
+
+       // diagonalFromFirstRowLR(array);
+       // System.out.println();
+       // diagonalFromSecondRowLR(array);
+
+       // diagonalFromFirstRowRL(array);
+       // System.out.println();
+        diagonalFromSecondRowRL(array);
+
+    }
+
+    private static void diagonalFromFirstRowLR(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (i == j)
+                    array[i][j] = 1;
+                else
+                    array[i][j] = 0;
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static void diagonalFromSecondRowLR(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (i == j+1)
+                    array[i][j] = 1;
+                else
+                    array[i][j] = 0;
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+    }
+
+    private static void diagonalFromSecondRowRL(int[][] array){
+        for(int i = array.length-1; i>=0; i--){
+            for(int j = 0; j <array[i].length; j++){
+                if (i == j) array[i][j] = 1;
+                else array[i][j] = 0;
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static void diagonalFromFirstRowRL(int[][] array){
+        for(int i = array.length-1; i>=0; i--){
+            for(int j = 0; j <array[i].length; j++){
+                if (i == j+1) array[i][j] = 1;
+                else array[i][j] = 0;
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}
+
+
+
+III.
+//Написать метод, который проверяет, является ли массив отсортированным:
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int[] array = {15, 10, 8, 4, 7};
+        int[] array1 = {4, 7, 8, 10, 15};
+        System.out.println("is array sorted? " + isSorted(array));
+        System.out.println("is array 1 sorted? " + isSorted(array1));
+
+    }
+
+    public static boolean isSorted(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1])
+                return false;
+        }
+        return true;
+    }
+
+}
+
+
+
+IV.
+//Написать метод, который выдает из исходного двумерного массива массив максимумов столбцов.
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int[][] array = {{25, 15, 19, 8}, {19, 32, 40, 45}};
+
+        System.out.println(arrayColumnMaximum(array));
+
+    }
+
+    public static String arrayColumnMaximum(int[][] array){
+        int max = array[0][0];
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (array[i][j] > max) max = array[i][j];
+            }
+            newArray[i] = max;
+        }
+        return Arrays.toString(newArray);
+    }
+
+}
+
+
+
+
