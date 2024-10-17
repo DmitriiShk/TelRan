@@ -1,0 +1,184 @@
+//1. Есть список значений String, вернуь список со значениями более 3 символов:
+
+public class Task2_1 {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Java");
+        list.add("is");
+        list.add("the");
+        list.add("best");
+        list.add("programming");
+        list.add("language");
+        list.add("in");
+        list.add("the");
+        list.add("world");
+        list.add("?");
+
+        ArrayList<String> newList = new ArrayList<>();
+        for(String s : list){
+            if(s.length()>3) newList.add(s);
+        }
+        System.out.println("New list: " + newList);
+    }
+}
+
+//2. Есть список значений int, вернуь список, содержащий только нечетные числа:
+
+public class Task2_2 {
+    public static void main(String[] args) {
+        
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
+        list.add(9);
+        list.add(10);
+
+        ArrayList<Integer> newList = new ArrayList<>();
+        for(Integer i : list){
+            if(i%2 !=0) newList.add(i);;
+        }
+        System.out.println("New list: " + newList);
+    }
+}
+
+public class Task2_3 {
+
+    public static void main(String[] args) {
+
+        List<String> list = new ArrayList<>();
+        list.add("To");
+        list.add("be");
+        list.add("or");
+        list.add("not");
+        list.add("to");
+        list.add("be");
+        list.add("that");
+        list.add("is");
+        list.add("the");
+        list.add("question");
+        System.out.println("Initial list: " + list);
+
+        System.out.println();
+
+        List<String> noDuplicatesList = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            String current = list.get(i).toLowerCase();
+            for(int j = 1; j<list.size(); j++){
+                if (!noDuplicatesList.contains(current)) {
+                     noDuplicatesList.add(current);
+                }
+            }
+        }
+        System.out.println("New list with unique elements: " + noDuplicatesList);
+    }
+}
+
+//Список значений String вернуть в строку, которая представляет собой конкатенацию всех значений.
+public class Task3_1 {
+
+    public static void main(String[] args) {     
+
+        List<String> list = new ArrayList<>();
+        list.add("To");
+        list.add("be");
+        list.add("or");
+        list.add("not");
+        list.add("to");
+        list.add("be");
+        list.add("that");
+        list.add("is");
+        list.add("the");
+        list.add("question");
+        System.out.println("Initial list: " + list);
+
+        System.out.println();
+
+        String result = String.join(" ", list);
+        System.out.println("Result: " + result + ".");
+    }
+}
+
+//Есть список интовых значений, вернуть их сумму:
+
+public class Task3_2 {
+
+    public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
+        int sum = 0;
+        for (Integer i : list) {
+           sum +=i;
+        }
+        System.out.println("Sum of array list elements: " + sum);
+    }
+}
+
+//Есть список интовых значений, вернуть максимальное значение:
+public class Task3_3 {  
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
+        int max = list.getFirst();
+        for (Integer i : list) {
+            if (i > max) max = i;
+        }
+        System.out.println("Maximum element of the array list is: " + max);
+    }
+}
+
+//Список значений String вернуть максимальную длину строки.
+public class Task3_4 {
+ 
+public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("To");
+        list.add("be");
+        list.add("or");
+        list.add("not");
+        list.add("to");
+        list.add("be");
+        list.add("that");
+        list.add("is");
+        list.add("the");
+        list.add("question");
+
+        int max = list.getFirst().length();
+        for(String s : list){
+            if (s.length() > max) max = s.length();
+        }
+        System.out.println("Maximum string length is: " + max);
+
+
+public class Task4 {
+
+  public static void main(String[] args) {
+        List<String> list1 = new ArrayList<>(List.of("To", "be", "or", "not", "to", "be"));
+        List<String> list2 = new ArrayList<>(List.of("that", "is", "the", "question"));
+
+        System.out.println(joinStringLists(list1, list2));
+
+        //Как вариант :)
+        //ArrayList<Object> list3 = new ArrayList<>(List.of(list1, "that", "is", "the", "question"));
+    }
+
+    public static List<String> joinStringLists(List<String> arrayA, List<String> arrayB){
+        List<String> listC = new ArrayList<>(arrayA);
+        listC.addAll(arrayB);
+        return listC;
+    }
+
+    public static List<Integer> joinIntegerLists(List<Integer> arrayA, List<Integer> arrayB){
+        List<Integer> listC = new ArrayList<>(arrayA);
+        listC.addAll(arrayB);
+        return listC;
+    }
+
+}
+
+
