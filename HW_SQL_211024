@@ -1,0 +1,84 @@
+USE shop;
+
+DROP TABLE IF EXISTS goods;
+
+CREATE TABLE goods(
+id 			  integer 			  PRIMARY KEY UNIQUE NOT NULL AUTO_INCREMENT, 
+title 		varchar(30)			NOT NULL DEFAULT '', 
+quantity 	integer 			  CHECK (quantity >0) NOT NULL, 
+instock 	varchar(1)			CHECK (instock IN('Y','N'))			
+);
+
+INSERT INTO goods (title, quantity, instock)
+			     VALUES ('Велосипед', 2, 'Y'),
+				          ('Скейт', 4, 'Y'),
+                  ('Самокат', 2, 'Y'),
+                  ('Сноуборд', 7, 'N'),
+                  ('Санки', 1, 'Y'),
+                  ('Коньки', 3, 'N'), 
+                  ('Ролики', 5, 'Y');
+                   
+SELECT * FROM goods;
+
+INSERT INTO goods (title, quantity, instock)
+			     VALUES ('Электросамокат', 10, 'Y'),
+				          ('Моноколесо', 15, 'N'),
+                  ('Шлем', 50, 'Y'); 
+
+
+DROP TABLE IF EXISTS goods_2;
+
+CREATE TABLE goods_2(
+id 			integer 			PRIMARY KEY UNIQUE NOT NULL AUTO_INCREMENT, 
+title 		varchar(30)			NOT NULL DEFAULT '', 
+quantity 	integer 			CHECK (quantity >0) NOT NULL, 
+price		integer				NOT NULL DEFAULT 0,
+in_stock 	varchar(1)			CHECK (in_stock IN('Y','N'))			
+);
+
+INSERT INTO goods_2 (title, quantity, price, in_stock)
+		     VALUES 		('Тюбинг', 5, 1000, 'Y'),
+				          	('Санки', 2, 1500, 'Y'),
+                    ('Снегокат', 2, 900, 'Y'),
+                    ('Сноуборд', 7, 700, 'N'),
+                    ('Клюшка', 8, 300, 'Y'),
+                    ('Коньки', 3, 350, 'N'),
+                    ('Форма', 9, 450, 'Y'),
+                    ('Лыжи', 10, 500, 'Y'),
+                    ('Шайба', 100, 30, 'Y'),
+                    ('Щитки', 200, 150, 'N'); 
+                    
+SELECT * FROM goods_2;
+
+-- 1
+SELECT title AS product FROM goods
+UNION ALL 
+SELECT title FROM goods_2;
+
+-- 2
+SELECT DISTINCT *
+FROM 
+(SELECT title AS product FROM goods
+UNION ALL 
+SELECT title FROM goods_2
+) AS uniqueTable; 
+
+-- 3
+SELECT id, title AS product, quantity, price, in_stock FROM goods_2
+UNION ALL 
+SELECT id, title, quantity, 0 AS price, instock FROM goods
+ORDER BY price;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
