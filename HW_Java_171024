@@ -1,0 +1,217 @@
+/*1. Составить список списков студентов, распределенных по отдельным классам List> studentGrades. Написать метод countTotalAmount(), который считает общее число студентов.
+Написать метод countAmountWithName(String name), который считает количество студентов в школе с заданным именем name.
+*/
+import java.util.*;
+
+public class StudentsList {
+
+    public static void main(String[] args) {
+
+        List<String> grade1 = new ArrayList<>(List.of("Ira Ivanova", "Sergey Alexeev", "Alexey Sergeyev", "Masha Pavlova"));
+        List<String> grade2 = new ArrayList<>(List.of("Anna Vasilieva", "Vasiliy Petrov", "Katya Semenova", "Petr Vasiliev"));
+        List<String> grade3 = new ArrayList<>(List.of("Vera Mikheeva", "Pavel Ilyin", "Natasha Zaitseva", "Igor Lavrov"));
+
+        List<List<String>> elementarySchool = new ArrayList<>(List.of(grade1, grade2, grade3));
+
+        System.out.println();
+
+        System.out.println(elementarySchool);
+        System.out.println();
+        numberOfStudents(elementarySchool);
+        System.out.println();
+        numberOfStudentsByName(elementarySchool, "Vera Mikheeva");    
+  }
+
+    private static void numberOfStudents(List<List<String>> listOfLists) {
+        int sum = 0;
+        for(List<String> list : listOfLists){
+            sum += list.size();
+     }
+        System.out.println("Number of students in the elementary school: " + sum);
+    }
+
+    private static void numberOfStudentsByName(List<List<String>> listOfLists, String name) {
+        int sum = 0;
+        for(List<String> list : listOfLists){
+            if (list.contains(name))
+                    sum += 1;
+        }
+        System.out.println("Number of students with " + "\"" + name + "\"" + " name in the elementary school: " + sum);
+    }
+
+
+/*2. Имеется заданный список имен студентов: List names = new ArrayList<>(List.of("Mary", "Jane", "Tom", "Tim", "Mark", "Ann", null, ""));
+С помощью итератора:
+a). Вывести имена, состоящие из 4 букв
+b). Удалить из списка null и пустые строки.
+*/
+
+ Iterator<Integer> iterator = names.iterator();
+
+     while(iterator.hasNext()){
+          String element = iterator.next();
+           if(element.length == 4) 
+          System.out.print(element + " ");
+     }
+
+C удалением null и " " также не получилось. Упираюсь в ошибку NullPointerException. 
+
+//Дополнительно
+/*1. Имеется заданный список имен студентов: List names = new ArrayList<>(List.of("Mary", "Jane", "Tom", "Tim", "Mark", "Ann", null, ""));
+С помощью итератора:
+a). Удалить из списка все имена, начинающиеся "Т"
+b). Удалить из списка "Ann", заменить на "student Ann"
+*/
+
+//C удалением null и "" пока не разобрался. Если бы null и "" не было, методы были бы следующими
+
+import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+
+public class RemoveFromLIst {
+
+    public static void main(String[] args) {
+        List<String> names = new ArrayList<>(List.of("Mary", "Jane", "Tom", "Mark", "Ann"));
+
+        nameRemovalByLetter(names, "T");
+        System.out.println();
+        nameReplacement(names, "Ann", "student Ann");
+
+    }
+
+    private static void nameReplacement(List<String> list, String oldName, String newName) {
+
+        System.out.println("List before replacement: " + list);
+
+        ListIterator<String> iterator = list.listIterator();
+        while(iterator.hasNext()){
+            String name = iterator.next();
+            if(name.contains(oldName)){
+                iterator.remove();
+                iterator.add(newName);
+            }
+        }
+        System.out.println("List after replacement " + list);
+    }
+
+    private static void nameRemovalByLetter(List<String> names, String letter) {
+
+        System.out.println("List before removal: " + names);
+
+        ListIterator<String> iterator = names.listIterator();
+        while(iterator.hasNext()){
+            String name = iterator.next();
+            if(name.contains(letter)){
+                iterator.remove();
+            }
+        }
+        System.out.println("List after removal: " + names);
+    }
+
+}
+
+//2. Итератор для класса Box c вложенными объектами А, В, С:
+//Вариант со счетчиком, который делали на summary session не работает (по крайней мере той, который скопирован у меня). Есть такой вариант: 
+
+import java.util.*;
+
+public class Box implements Iterable<String> {
+    private String itemA;
+    private String itemB;
+    private String itemC;
+
+    public Box(String itemA, String itemB, String itemC) {
+        this.itemA = itemA;
+        this.itemB = itemB;
+        this.itemC = itemC;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new MyIterator();
+    }
+
+  public class MyIterator implements Iterator<String> {
+
+        List<String> boxList = new ArrayList(List.of(itemA, itemB, itemC));
+        public int index = 0;
+
+        @Override
+        public boolean hasNext(){
+            return boxList.size() > index;
+        }
+
+        @Override 
+        public String next(){
+          if(!hasNext){
+            throw new NoSuchElementException();
+          } return boxList.get(index++);
+       }
+   } 
+}
+
+
+//3.Итератор для двухмерного массива:
+
+public class Main {
+
+    public static void main(String[] args) {
+        Integer[][] array = new Integer[][]{{1}, {2,3,4,5,},{6,7},{8,9,10,11,12,}};
+        ArrayIterator i = new ArrayIterator(array);
+
+        while (i.hasNext()){
+            System.out.print(i.next() + " ");
+        }
+    }
+}
+
+import java.util.*;
+
+public class ArrayIterator implements Iterator<Integer> {
+    private Integer[][] array;
+    private int i, j;
+    public ArrayIterator(Integer[][] array) {
+        this.array = array;
+    }
+    @Override
+    public boolean hasNext() {
+        return i < array.length && j < array[i].length;
+    }
+    @Override
+    public Integer next() {
+        Integer r = array[i][j++];
+        if (j >= array[i].length) {
+            i++;
+            j = 0;
+        }
+        return r;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
