@@ -1,0 +1,118 @@
+public abstract class Employee implements JobActions{
+
+    private String name;
+
+    public Employee(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+public interface JobActions {
+
+    void doTask(Task task);
+
+    void haveRest();
+
+    class Task{                                 //Класс внутри интерфейса - статический
+        private String name;
+        private String description;
+
+        public Task(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+}
+
+import static Homework.HW_22102024.JobActions.Task;
+
+public class Office {
+
+    public static void main(String[] args) {
+
+        //JobActions.Task task = new JobActions.Task("Web Application", "Create Web Application");
+
+        Task task = new Task("Web Application", "Create Web Application");
+
+        JobActions manager = new JobActions() {
+            @Override
+            public void doTask(Task task) {
+                System.out.println("Manager says: we need to " + task.getDescription());
+            }
+            @Override
+            public void haveRest() {
+                System.out.println("Drinks coffee");
+            }
+        };
+
+        JobActions worker = new JobActions() {
+            @Override
+            public void doTask(Task task) {
+                System.out.println("Is executing task " + "\""+task.getDescription()+"\".");
+            }
+
+            @Override
+            public void haveRest() {
+                System.out.println("Is having rest and smoking.");
+            }
+        };
+
+        JobActions lazyWorker = new JobActions() {
+            @Override
+            public void doTask(Task task) {
+
+            }
+
+            @Override
+            public void haveRest() {
+                System.out.println("Doing nothing.");
+            }
+        };
+
+        manager.doTask(task);
+        manager.haveRest();
+        worker.doTask(task);
+        worker.haveRest();
+        lazyWorker.doTask(task);
+        lazyWorker.haveRest();
+
+
+        Employee developer = new Employee("John") {
+            @Override
+            public void doTask(Task task) {
+                System.out.println("Employee " + this.getName() + " executes the task " + "\""+task.getDescription()+"\"");
+            }
+
+            @Override
+            public void haveRest() {
+                System.out.println("Employee " + this.getName() + " is driking coffee and smoking.");
+            }
+        };
+
+        developer.doTask(task);
+        developer.haveRest();
+
+    }
+
+}
