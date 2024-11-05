@@ -1,0 +1,238 @@
+//1. Создать класс Student с полями name, surname. Определить порядок студентов через Comparable (natural ordering)
+//   с учетом всех полей. Создать компараторы по отдельным полям name, surname.
+//   Составить список студентов. Вывести отсортированный список студентов - через Comparable и два компаратора.
+//   Составить TreeSet из исходного списка студентов.  
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Student student1 = new Student("Irina", "Safronova", 20, 3);
+        Student student2 = new Student("Michael", "Yefremov", 21, 4);
+        Student student3 = new Student("Sergey", "Ivanov", 19, 2);
+        Student student4 = new Student("Vika", "Golubeva", 18, 1);
+        Student student5 = new Student("Olga", "Zaikina", 19, 2);
+
+        List<Student> list = new ArrayList<>();
+        list.add(student1);
+        list.add(student2);
+        list.add(student3);
+        list.add(student4);
+        list.add(student5);
+
+        System.out.println("List before sorting");
+
+        for (Student st : list) {
+            System.out.println(st);
+        }
+        System.out.println();
+
+        System.out.println("TreeSet from the original list:");
+        TreeSet<Student> set = new TreeSet<>(list);
+        System.out.println(set);
+        System.out.println();
+
+        System.out.println("List after natural sorting (by name)");
+        
+        Collections.sort(list);
+        for (Student st : list) {
+            System.out.println(st);
+        }
+        System.out.println();
+
+        System.out.println("List after sorting by surname");
+        Collections.sort(list, new CompareBySurname());
+
+        for (Student st : list) {
+            System.out.println(st);
+        }
+        System.out.println();
+
+        System.out.println("List after sorting by age");
+        Collections.sort(list, new CompareByAge());
+
+        for (Student st : list) {
+            System.out.println(st);
+        }
+        System.out.println();
+    }
+}
+
+import java.util.Objects;
+
+public class Student implements Comparable<Student> {
+
+    private String name;
+    private String surname;
+    private int age;
+    private int course;
+
+    public Student(String name, String surname, int age, int course) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.course = course;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && course == student.course && Objects.equals(name, student.name) && Objects.equals(surname, student.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, age, course);
+    }
+
+    @Override
+    public String toString() {
+        return "Student {" +
+                "name = '" + name + '\'' +
+                ", surname = '" + surname + '\'' +
+                ", age = " + age +
+                ", course = " + course +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Student another) {
+        int result = this.name.compareTo(another.name);
+        if(result == 0) result = this.surname.compareTo(another.surname);
+        if(result == 0) result = this.age - another.age;
+        if(result == 0) result = this.course - another.course;
+        return result;
+    }
+}
+
+import java.util.Comparator;
+
+public class CompareBySurname implements Comparator<Student> {
+    @Override
+    public int compare(Student student, Student another) {
+        return student.getSurname().compareTo(another.getSurname());
+    }
+}
+
+import java.util.Comparator;
+
+public class CompareByAge implements Comparator<Student> {
+    @Override
+    public int compare(Student student, Student another) {
+        return student.getAge() - another.getAge();
+    }
+}
+
+
+//2.  Имеются банковские карты разных платежных систем MasterCard VisaCard. Реализовать возможность их хранения в общем TreeSet.
+
+public class MasterCard extends Card {
+
+    private int masterCardId;
+
+    public MasterCard(int masterCardId) {
+        this.masterCardId = masterCardId;
+    }
+
+    @Override
+    public int getID() {return masterCardId;}
+
+    public int getMasterCardId() {return masterCardId;}
+
+    @Override
+    public String toString() {
+        return "MasterCard {" +
+                "masterCardId = " + masterCardId +
+                '}';
+    }
+}
+
+public class Visa extends Card {
+    private int visaId;
+
+    public Visa(int visaId) {this.visaId = visaId;}
+
+    @Override
+    public int getID() {return visaId;}
+
+    public int getVisaId() {return visaId;}
+
+    @Override
+    public String toString() {
+        return "Visa{" +
+                "visaId=" + visaId +
+                '}';
+    }
+}
+
+public abstract class Card implements Comparable<Card> {
+
+    public abstract int getID();
+
+    @Override
+    public int compareTo(Card another) {
+        return Integer.compare(this.getIt(), another.getIt());
+    }
+}
+
+public class BankSystem {
+
+    public static void main(String[] args) {
+        MasterCard masterCard1 = new MasterCard(123);
+        MasterCard masterCard2 = new MasterCard(124);
+        Visa visa1 = new Visa(542642);
+        Visa visa2 = new Visa(34936);
+        
+        Set<Card> set = new TreeSet<>();
+        set.add(masterCard1);
+        set.add(masterCard2);
+        set.add(visa1);
+        set.add(visa2);
+        set.add(paypal);
+
+        System.out.println(set);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
