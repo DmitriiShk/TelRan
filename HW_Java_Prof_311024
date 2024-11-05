@@ -1,0 +1,132 @@
+// 1. Из изначально данного Set names получить Set длин имен
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Set<String> names = new TreeSet<>();
+        names.add("John");
+        names.add("Mary");
+        names.add("Paul");
+        names.add("George");
+        names.add("Michael");
+        names.add("Elisabeth");
+
+        System.out.println("Initial TreeSet:");
+        System.out.println(names);
+
+        namesToNameLength(names);
+    }
+
+    private static void namesToNameLength(Set<String> names) {
+    //Так как в TreeSet нет дубликатов, мы не сможем увидеть длины всех слов
+    //если будем сохранять длины в TreeSet, поэтому преобразуем TreeSet в ArrayListю
+
+        List<String> nameList = new ArrayList<>(names);
+        List<Integer> nameLength = new ArrayList<>();
+
+        for(String name : nameList){
+            nameLength.add(name.length());
+        }
+        System.out.println("Lengths of the names in the set:");
+        System.out.println(nameLength);
+    }
+}
+
+// 2. Имеется текст "Hello world!!!". Вывести уникальный набор символов
+
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Main {
+    public static void main(String[] args) {
+
+        String s = "Hello world!!!";
+
+        Set<Character> uniqueCharacter = new TreeSet<>();
+
+        for (char c : s.toCharArray()){
+            uniqueCharacter.add(c);
+        }
+        System.out.println(uniqueCharacter);
+    }
+}
+
+
+// 3. Метод, чтобы получить первое и последнее вхождение элементов в отсортированном списке.
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1, 2, 2, 2, 3, 4, 5);
+
+        int target = 3;
+        int firstIndex = findFirstOccurrence(list, target);
+        int lastIndex = findLastOccurrence(list, target);
+
+        System.out.println("First occurrence of " + target + ": " + firstIndex);
+        System.out.println("Last occurrence of " + target + ": " + lastIndex);
+    }
+
+    public static int findFirstOccurrence(List<Integer> list, int target) {
+        int low = 0;
+        int high = list.size() - 1;
+        int result = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) == target) {
+                result = mid;
+                high = mid - 1; // продолжаем искать в левой половине
+            } else if (list.get(mid) < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
+
+    public static int findLastOccurrence(List<Integer> list, int target) {
+        int low = 0;
+        int high = list.size() - 1;
+        int result = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) == target) {
+                result = mid;
+                low = mid + 1; // продолжаем искать в правой половине
+            } else if (list.get(mid) < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
