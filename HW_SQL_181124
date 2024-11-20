@@ -1,0 +1,86 @@
+/*1) Выведите минимальный рейтинг покупателя среди сделавших заказ в мае 2022 года.
+Вывести : minrating
+*/
+
+/*Так как в мае был всего один заказ, то и рейтинг клиента, совершившего заказ,
+  будет минимальным. Изменил задачу на март.
+*/ 
+
+/*Самый примитивный метод найти клиента с минимальным рейтингом,
+  из тех, кто сделал заказ в определенный месяц. Через LIMIT:
+  */
+SELECT 
+		c.CUST_ID AS customer_id,
+        c.CNAME AS customer,
+        c.RATING AS customer_rating,
+        o.ORDER_ID AS order_id,
+        o.ODATE AS order_date
+FROM customers AS c
+INNER JOIN orders AS o
+USING (CUST_ID)
+WHERE MONTH(o.ODATE) = 3
+ORDER BY c.RATING
+LIMIT 1;
+
+
+-- 2й вариант: 
+
+CREATE VIEW tmp AS
+SELECT
+	CUST_ID AS customer_id,
+	CNAME AS customer,
+	RATING AS rating
+ FROM customers
+ WHERE CUST_ID IN ( SELECT
+						 CUST_ID
+						 FROM   orders
+						 WHERE MONTH(ODATE) = 3);
+SELECT * FROM tmp;
+
+SELECT 
+	   customer_id,
+       customer, 
+       rating AS minrating
+FROM tmp
+WHERE rating = (SELECT MIN(rating) 
+				FROM tmp);
+
+/*
+2)Выведите продавцов, которые оформили заказ на наибольшую сумму в период с марта по май 2022 года.
+Вывести : sellid, amt
+*/
+
+CREATE VIEW tmp1 AS
+SELECT 
+		s.SELL_ID AS seller_id,
+        s.SNAME AS seller,
+        o.AMT AS amount
+FROM sellers AS s
+INNER JOIN orders AS o
+USING (SELL_ID)
+WHERE o.ODATE BETWEEN '2022-03-01' AND '2022-06-01';
+
+SELECT * FROM tmp1;
+
+SELECT 
+		seller_id,
+        seller,
+        amount
+FROM tmp1
+WHERE amount = (SELECT MAX(amount) from tmp1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
